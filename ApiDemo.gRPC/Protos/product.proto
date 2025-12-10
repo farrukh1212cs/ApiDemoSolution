@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcProductService.Protos";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
+
+message ProductMessage {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  int32 stock = 5;
+}
+
+message ProductRequest {
+  string id = 1;
+}
+
+message ProductList {
+  repeated ProductMessage products = 1;
+}
+
+message CreateProductRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+  int32 stock = 4;
+}
+
+message UpdateProductRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  int32 stock = 5;
+}
+
+service ProductService {
+  rpc GetProduct(ProductRequest) returns (ProductMessage);
+  rpc GetProducts(google.protobuf.Empty) returns (ProductList);
+  rpc CreateProduct(CreateProductRequest) returns (ProductMessage);
+  rpc UpdateProduct(UpdateProductRequest) returns (ProductMessage);
+  rpc DeleteProduct(ProductRequest) returns (google.protobuf.BoolValue);
+}
